@@ -51,5 +51,5 @@ jobs:
           docker kill $(docker ps -q)
           docker pull jacksonknew/webapp:client-beta
           docker pull jacksonknew/webapp:server-beta
-          docker run -d --rm -p 80:80 jacksonknew/webapp:client-beta
+          docker run -d --rm -p 80:80 -e IP_ADDRESS=${{ secrets.VM_HOST }} jacksonknew/webapp:client-beta
           docker run -d --rm -p 3500:3500 jacksonknew/webapp:server-beta
