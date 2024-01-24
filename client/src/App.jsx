@@ -5,7 +5,7 @@ function App() {
 
   return (
     <>
-      <h1>Gym motivation</h1>
+      <h1>Motivation muscu</h1>
       <InsultGenerator/>
     </>
   )

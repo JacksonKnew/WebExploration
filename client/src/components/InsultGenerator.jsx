@@ -18,7 +18,7 @@ const InsultGenerator = () => {
             addInsult()
             setinterval(setInterval(() => {
                 addInsult();
-            }, 4000))
+            }, 3000))
         }
     }
     
