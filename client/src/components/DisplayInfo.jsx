@@ -6,7 +6,7 @@ const DisplayInfo = () => {
     useEffect(
         () => {
             console.log("Sending request")
-            fetch(`http://35.180.109.223:3500/items`)
+            fetch(`http://${process.env.SERV_ADDRESS}:3500/items`)
                 .then((res) => {
                     return res.json()
                 })
