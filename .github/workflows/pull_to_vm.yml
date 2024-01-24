@@ -4,7 +4,7 @@ name: pull_to_vm
 on:
   # Triggers the workflow on push or pull request events but only for the "main" branch
   push:
-    branches: [ "main"]
+    branches: [ "main", "setup"]
   pull_request:
     branches: [ "main" ]
 
@@ -14,3 +14,14 @@ on:
 jobs:
   pull_run:
     runs-on: ubuntu-latest
+
+    steps:
+    - name: pull and run containers on vm
+      uses: appleboy/ssh-action@v0.1.10
+        with:
+          host: ${{ secrets.VM_HOST }}
+          username: ${{ secrets.VM_USER }}
+          key: ${{ secrets.VM_KEY }}
+          command_timeout: 30m
+          script: | 
+            echo "Nice Job!!!"
