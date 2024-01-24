@@ -49,7 +49,7 @@ jobs:
         command_timeout: 30m
         script: | 
           docker kill $(docker ps -q)
-          docker pull jacksonknew/webapp:client-beta
-          docker pull jacksonknew/webapp:server-beta
-          docker run -d --rm -p 80:80 --env SERV_ADDRESS=${{ secrets.VM_HOST }} jacksonknew/webapp:client-beta
-          docker run -d --rm -p 3500:3500 jacksonknew/webapp:server-beta
+          docker pull jacksonknew/webapp:client-latest
+          docker pull jacksonknew/webapp:server-latest
+          docker run -d --rm -p 80:80 --env SERV_ADDRESS=${{ secrets.VM_HOST }} jacksonknew/webapp:client-latest
+          docker run -d --rm -p 3500:3500 jacksonknew/webapp:server-latest
