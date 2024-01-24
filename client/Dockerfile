@@ -1,6 +1,7 @@
 FROM node:18.18.2-alpine as build
 WORKDIR /app
 ENV PATH /app/node_modules/.bin:$PATH
+ARG SERV_ADDRESS
 COPY package.json ./
 COPY package-lock.json ./
 RUN npm ci --silent
