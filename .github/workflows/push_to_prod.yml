@@ -4,7 +4,7 @@ name: push_to_prod
 on:
   # Triggers the workflow on push or pull request events but only for the "main" branch
   push:
-    branches: [ "main"]
+    branches: [ "main" , "setup"]
   pull_request:
     branches: [ "main" ]
 
@@ -13,6 +13,7 @@ on:
 
 jobs:
   push_images:
+    name: push_images
     runs-on: ubuntu-latest
 
     steps:
@@ -32,3 +33,23 @@ jobs:
           cd server
           docker build -t ${{ secrets.DOCKER_USERNAME }}/webapp:server-beta .
           docker push ${{ secrets.DOCKER_USERNAME }}/webapp:server-beta
+
+  pull_run:
+    name: pull_run
+    needs: push_images
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: pull and run containers on vm
+      uses: appleboy/ssh-action@v0.1.10
+      with:
+        host: ${{ secrets.VM_HOST }}
+        username: ${{ secrets.VM_USER }}
+        key: ${{ secrets.VM_KEY }}
+        command_timeout: 30m
+        script: | 
+          docker kill $(docker ps -q)
+          docker pull jacksonknew/webapp:client-beta
+          docker pull jacksonknew/webapp:server-beta
+          docker run -d --rm -p 80:80 jacksonknew/webapp:client-beta
+          docker run -d --rm -p 3500:3500 jacksonknew/webapp:server-beta
