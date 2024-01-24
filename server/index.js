@@ -3,7 +3,7 @@ const cors = require("cors");
 const app = express();
 app.use(cors())
 
-const port = process.env.PORT || 3500;
+const port = 3500;
 
 app.get("/items", (req, res) => {
     console.log("Received GET request at /items endpoint")
