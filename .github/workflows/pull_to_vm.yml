@@ -24,4 +24,9 @@ jobs:
         key: ${{ secrets.VM_KEY }}
         command_timeout: 30m
         script: | 
-          echo "Nice Job!!!"
+          docker kill $(docker ps -q)
+          docker pull jacksonknew/webapp:client-beta
+          docker pull jacksonknew/webapp:server-beta
+          docker run -d --rm -p 80:80 webapp:client-beta
+          docker run -d --rm -p 3500:3500 webapp:server-beta
+
