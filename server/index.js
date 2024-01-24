@@ -1,9 +1,7 @@
 const express = require("express");
 const cors = require("cors");
 const app = express();
-app.use(cors({
-    origin: 'http://35.180.109.223/'
-  }));
+app.use(cors())
 
 const port = 3500;
 
