@@ -23,7 +23,7 @@ jobs:
       - name: build and push client
         run: |
           cd client
-          docker build --build-arg SERV_ADDRESS=${{ secrets.VM_HOST}} -t ${{ secrets.DOCKER_USERNAME }}/webapp:client-latest .
+          docker build -t ${{ secrets.DOCKER_USERNAME }}/webapp:client-latest .
           docker push ${{ secrets.DOCKER_USERNAME }}/webapp:client-latest
       
       - name: build and push server
