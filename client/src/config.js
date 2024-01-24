@@ -1,3 +1,3 @@
-export default module.exports = {
+export const config = {
     ServAddress: "35.180.109.223"
 }
