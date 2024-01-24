@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { config } from '../config';
 
 const DisplayInfo = () => {
     const [items, setItems] = useState([]);
@@ -6,7 +7,7 @@ const DisplayInfo = () => {
     useEffect(
         () => {
             console.log("Sending request")
-            fetch(`http://${process.env.SERV_ADDRESS}:3500/items`)
+            fetch(`http://${config.ServAddress}:3500/items`)
                 .then((res) => {
                     return res.json()
                 })
