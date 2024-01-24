@@ -18,9 +18,17 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
+      - name: login to hub
+        run: echo ${{ secrets.DOCKER_PASSWORD }} | docker login -u ${{ secrets.DOCKER_USERNAME }} -password-stdin
+
       - name: build and push client
         run: |
           cd client
           docker build -t ${{ secrets.DOCKER_USERNAME }}/webapp:client-beta .
-          docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
           docker push ${{ secrets.DOCKER_USERNAME }}/webapp:client-beta
+      
+      - name: build and push server
+        run: |
+          cd server
+          docker build -t ${{ secrets.DOCKER_USERNAME }}/webapp:server-beta .
+          docker push ${{ secrets.DOCKER_USERNAME }}/webapp:server-beta
