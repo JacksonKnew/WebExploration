@@ -1,0 +1,55 @@
+name: push_to_prod
+
+# Controls when the workflow will run
+on:
+  # Triggers the workflow on push or pull request events but only for the "main" branch
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+jobs:
+  push_images:
+    name: push_images
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: login to hub
+        run: echo ${{ secrets.DOCKER_PASSWORD }} | docker login -u ${{ secrets.DOCKER_USERNAME }} --password-stdin
+
+      - name: build and push client
+        run: |
+          cd client
+          docker build -t ${{ secrets.DOCKER_USERNAME }}/webapp:client-latest .
+          docker push ${{ secrets.DOCKER_USERNAME }}/webapp:client-latest
+      
+      - name: build and push server
+        run: |
+          cd server
+          docker build -t ${{ secrets.DOCKER_USERNAME }}/webapp:server-latest .
+          docker push ${{ secrets.DOCKER_USERNAME }}/webapp:server-latest
+
+  pull_run:
+    name: pull_run
+    needs: push_images
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: pull and run containers on vm
+      uses: appleboy/ssh-action@v0.1.10
+      with:
+        host: ${{ secrets.VM_HOST }}
+        username: ${{ secrets.VM_USER }}
+        key: ${{ secrets.VM_KEY }}
+        command_timeout: 30m
+        script: | 
+          docker kill $(docker ps -q)
+          docker pull jacksonknew/webapp:client-beta
+          docker pull jacksonknew/webapp:server-beta
+          docker run -d --rm -p 80:80 --env SERV_ADDRESS=${{ secrets.VM_HOST }} jacksonknew/webapp:client-beta
+          docker run -d --rm -p 3500:3500 jacksonknew/webapp:server-beta

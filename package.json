@@ -1,0 +1,14 @@
+{
+  "name": "webexploration",
+  "version": "1.0.0",
+  "description": "Simple full stack web application",
+  "main": "index.js",
+  "scripts": {
+    "install": "cd client && npm install && cd ../server && npm install",
+    "server": "cd server && npx nodemon",
+    "client": "cd client && npm run dev"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}
