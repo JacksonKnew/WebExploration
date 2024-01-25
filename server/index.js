@@ -1,9 +1,22 @@
 const express = require("express");
+const fs = require('fs');
+var http = require('http');
+var https = require('https');
 const cors = require("cors");
-const app = express();
+
+const privateKey = fs.readFileSync('certs/private.key');
+const certificate = fs.readFileSync('certs/certificate.crt');
+
+const credentials = {key: privateKey, cert: certificate};
+
+const app = express(credentials);
 app.use(cors())
 
-const port = 3500;
+const httpServer = http.createServer(app);
+const httpsServer = https.createServer(credentials, app);
+
+const httpPort = 3499;
+const httpsPort = 3500;
 
 const insultListEn = [
     "YOU SON OF A BITCH",
@@ -56,4 +69,5 @@ app.get("/insult", (req, res) => {
     res.send({insult: insultListFr[Math.floor(Math.random()*insultListFr.length)]})
 })
 
-app.listen(port, () => console.log(`Listening on port ${port}`));
+http.listen(httpPort, () => console.log(`Listening on port ${httpPort}`));
+https.listen(httpsPort, () => console.log(`Listening on port ${httpsPort}`));

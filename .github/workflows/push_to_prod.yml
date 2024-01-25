@@ -50,4 +50,4 @@ jobs:
           docker pull jacksonknew/webapp:client-latest
           docker pull jacksonknew/webapp:server-latest
           docker run -d --rm -p 80:80 -p 443:443 -v /home/ubuntu/certs:/etc/nginx/certs jacksonknew/webapp:client-latest
-          docker run -d --rm -p 3500:3500 jacksonknew/webapp:server-latest
+          docker run -d --rm -p 3500:3500 -v /home/ubuntu/certs:/app/certs jacksonknew/webapp:server-latest
