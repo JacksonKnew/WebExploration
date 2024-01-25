@@ -23,7 +23,7 @@ const InsultGenerator = () => {
     }
     
     const addInsult = () => {
-        fetch(`http://${config.ServAddress}:3500/insult`)
+        fetch(`https://${config.ServAddress}:3500/insult`)
             .then((res) => {
                 return res.json()
             })
