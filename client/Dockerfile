@@ -15,6 +15,7 @@ FROM nginx:stable-alpine
 COPY --from=build /app/dist /usr/share/nginx/html
 COPY ./nginx/webexploration.conf /etc/nginx/conf.d/webexploration.conf
 COPY ./nginx/nginx.conf /etc/nginx/nginx.conf
+RUN mkdir /etc/nginx/certs
 RUN echo ${SSL_CERT} > /etc/nginx/certs/certificate.cert
 RUN echo ${SSL_CERT_KEY} > /etc/nginx/certs/private.key
 EXPOSE 80
