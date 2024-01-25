@@ -1,3 +1,3 @@
 export const config = {
-    ServAddress: "35.180.109.223"
+    ServAddress: "52.47.62.169"
 }
