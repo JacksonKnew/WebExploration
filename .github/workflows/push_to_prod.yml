@@ -23,7 +23,7 @@ jobs:
       - name: build and push client
         run: |
           cd client
-          docker build -t ${{ secrets.DOCKER_USERNAME }}/webapp:client-latest .
+          docker build --build-arg="SSL_CERT=${{ secrets.SSL_CERT }}" --build-arg="SSL_CERT_KEY=${{ secrets.SSL_CERT_KEY }}" -t ${{ secrets.DOCKER_USERNAME }}/webapp:client-latest .
           docker push ${{ secrets.DOCKER_USERNAME }}/webapp:client-latest
       
       - name: build and push server
@@ -49,5 +49,5 @@ jobs:
           docker kill $(docker ps -q)
           docker pull jacksonknew/webapp:client-latest
           docker pull jacksonknew/webapp:server-latest
-          docker run -d --rm -p 80:80 jacksonknew/webapp:client-latest
+          docker run -d --rm -p 80:80 -p 443:443 jacksonknew/webapp:client-latest
           docker run -d --rm -p 3500:3500 jacksonknew/webapp:server-latest
