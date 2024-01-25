@@ -8,14 +8,18 @@ const InsultGenerator = () => {
     insultsRef.current = insults;
 
     const [interval, setinterval] = useState(null);
+    const intervalRef = useRef(interval);
+    intervalRef.current = interval;
 
     const useSpeech = 'speechSynthesis' in window;
 
     const loopInsults = () => {
-        addInsult()
-        setinterval(setInterval(() => {
-            addInsult();
-        }, 3000))
+        if (intervalRef.current == null) {
+            addInsult()
+            setinterval(setInterval(() => {
+                addInsult();
+            }, 3000))
+        }
     }
     
     const addInsult = () => {
