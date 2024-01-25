@@ -69,5 +69,5 @@ app.get("/insult", (req, res) => {
     res.send({insult: insultListFr[Math.floor(Math.random()*insultListFr.length)]})
 })
 
-http.listen(httpPort, () => console.log(`Listening on port ${httpPort}`));
-https.listen(httpsPort, () => console.log(`Listening on port ${httpsPort}`));
+httpServer.listen(httpPort, () => console.log(`Listening on port ${httpPort}`));
+httpsServer.listen(httpsPort, () => console.log(`Listening on port ${httpsPort}`));
