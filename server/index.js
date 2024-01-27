@@ -59,6 +59,10 @@ const insultListFr = [
     "TU RESSEMBLES A LADY CACA"
 ]
 
+const complimentsList = [
+    "Tu ressembles à Appolon"
+]
+
 app.get("/items", (req, res) => {
     console.log("Received GET request at /items endpoint");
     res.send({items: ["This comes from the server", "incredible", "I am absolutely loving this"]})
@@ -66,7 +70,7 @@ app.get("/items", (req, res) => {
 
 app.get("/insult", (req, res) => {
     console.log("Received GET request at /insult endpoint");
-    res.send({insult: insultListFr[Math.floor(Math.random()*insultListFr.length)]})
+    res.send({insult: complimentsList[Math.floor(Math.random()*complimentsList.length)]})
 })
 
 httpServer.listen(httpPort, () => console.log(`Listening on port ${httpPort}`));
