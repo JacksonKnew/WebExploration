@@ -1,3 +1,3 @@
 export const config = {
-    ServAddress: "plwebexploration.com"
+    ServAddress: "https://plwebexploration.com:3500"
 }

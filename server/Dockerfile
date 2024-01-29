@@ -7,5 +7,4 @@ RUN npm install --silent
 COPY . ./
 RUN mkdir ./certs
 
-EXPOSE 3500
 CMD ["node", "index.js"]
