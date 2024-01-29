@@ -46,8 +46,8 @@ jobs:
         key: ${{ secrets.VM_KEY }}
         command_timeout: 30m
         script: | 
-          docker kill $(docker ps -q)
+          docker kill client server
           docker pull jacksonknew/webapp:client-latest
           docker pull jacksonknew/webapp:server-latest
-          docker run -d --rm -p 80:80 -p 443:443 -v /home/ubuntu/certs:/etc/nginx/certs jacksonknew/webapp:client-latest
-          docker run -d --rm -p 3500:3500 -v /home/ubuntu/certs:/app/certs jacksonknew/webapp:server-latest
+          docker run --name client -d --rm -p 80:80 -p 443:443 -v /home/ubuntu/certs:/etc/nginx/certs jacksonknew/webapp:client-latest
+          docker run --name server -d --rm -p 3500:3500 -v /home/ubuntu/certs:/app/certs jacksonknew/webapp:server-latest

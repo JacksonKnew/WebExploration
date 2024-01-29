@@ -1,0 +1,22 @@
+name: pull_server
+
+on:
+  workflow_dispatch:
+
+jobs:
+  pull_server:
+    name: pull_server
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: ll and run server on vm
+      uses: appleboy/ssh-action@v0.1.10
+      with:
+        host: ${{ secrets.VM_HOST }}
+        username: ${{ secrets.VM_USER }}
+        key: ${{ secrets.VM_KEY }}
+        command_timeout: 30m
+        script: | 
+          docker kill server
+          docker pull jacksonknew/webapp:server-latest
+          docker run --name server -d --rm -p 3500:3500 -v /home/ubuntu/certs:/app/certs jacksonknew/webapp:server-latest
